@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An introduction to my background and interests in frontend development."
+    />
+    <title>About Me | Personal Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+
+  <body>
+    <img
+      class="portrait-image"
+      id="portrait-image"
+      src="./img/IMG_9471.jpeg"
+      alt="Developer"
+      aria-hidden="true"
+    />
+
+    <header class="site-header">
+      <a
+        class="site-label"
+        href="#about"
+        aria-label="Personal portfolio, about me"
+        >Personal Portfolio</a
+      >
+      <span class="header-note">Frontend Development</span>
+    </header>
+
+    <main class="about-page">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">A practical approach to the web</p>
+        <h1 id="page-title">About Me</h1>
+        <p class="intro-copy">
+          Before frontend, I worked with real-world systems: troubleshooting
+          problems and making sure things worked when it mattered. I bring that
+          same practical, detail-focused approach to turning ideas into clear,
+          responsive interfaces.
+        </p>
+        <button class="color-button" id="color-button" type="button">
+          Change the page color
+          <span class="button-arrow" aria-hidden="true">↗</span>
+        </button>
+      </section>
+
+      <section class="interests" aria-labelledby="interests-title">
+        <div class="section-heading">
+          <p class="eyebrow">What I’m building</p>
+          <h2 id="interests-title">Areas of interest</h2>
+        </div>
+        <ul class="interest-list">
+          <li><span class="interest-number">01</span>Frontend Development</li>
+          <li><span class="interest-number">02</span>JavaScript &amp; React</li>
+          <li>
+            <span class="interest-number">03</span>UI/UX &amp; Responsive Design
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Learning by making, one interface at a time.</span>
+      <span>Denmark</span>
+    </footer>
+  </body>
+</html>
