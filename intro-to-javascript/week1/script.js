@@ -39,3 +39,40 @@ function costEstimate(params) {
 }
 
 console.log(costEstimate(petersHouseParams));
+
+// Ez Namey (Startup name generator)
+const firstWords = [
+  "Easy",
+  "Smart",
+  "Bright",
+  "Fast",
+  "Next",
+  "Digital",
+  "Fresh",
+  "Super",
+  "Simple",
+  "Global",
+];
+
+const secondWords = [
+  "Tech",
+  "Solutions",
+  "Labs",
+  "Works",
+  "Hub",
+  "Space",
+  "Flow",
+  "Systems",
+  "Studio",
+  "Ventures",
+];
+
+function getRandomName(firstWord, secondWord) {
+  const randomNumber = Math.floor(Math.random() * 10);
+  const startupName = `${firstWord[randomNumber]} ${secondWord[randomNumber]}`;
+  const startupNameLength = startupName.length;
+
+  return `The startup: "${startupName}" contains ${startupNameLength} characters`;
+}
+
+console.log(getRandomName(firstWords, secondWords));
