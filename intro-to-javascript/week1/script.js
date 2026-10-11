@@ -18,13 +18,26 @@ if (shouldShowResultInDogYears) {
 }
 
 // Housey pricey (A house price estimator)
-const petersHouseParams = [8, 10, 10, 100, 2500000];
-const juliasHouseParams = [5, 11, 8, 70, 1000000];
+const petersHouseParams = {
+  width: 8,
+  depth: 10,
+  height: 10,
+  gardenSizeInM2: 100,
+  realPrice: 2500000,
+};
+
+const juliasHouseParams = {
+  width: 5,
+  depth: 11,
+  height: 8,
+  gardenSizeInM2: 70,
+  realPrice: 1000000,
+};
 
 function costEstimate(params) {
-  const volumeInMeters = params[0] * params[1] * params[2];
-  const gardenSizeInM2 = params[3];
-  const realPrice = params[4];
+  const volumeInMeters = params.width * params.depth * params.height;
+  const gardenSizeInM2 = params.gardenSizeInM2;
+  const realPrice = params.realPrice;
   const estimatedHousePrice =
     volumeInMeters * 2.5 * 1000 + gardenSizeInM2 * 300;
   const difference = Math.abs(realPrice - estimatedHousePrice);
