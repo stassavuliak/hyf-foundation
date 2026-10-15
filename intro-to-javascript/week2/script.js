@@ -64,7 +64,7 @@ const clothesToWear = recommendWhatToWear(21);
 const class07Students = [];
 function addStudentToClass(studentName) {
   // You write code here
-  if (!studentName) return;
+  if (!studentName.trim()) return `You didn't provide student name!` 
   if (class07Students.includes("Queen")) return;
   if (studentName === "Queen") class07Students.push(studentName);
   if (class07Students.includes(studentName)) {
