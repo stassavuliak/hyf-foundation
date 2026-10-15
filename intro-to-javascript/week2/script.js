@@ -70,6 +70,9 @@ const class07Students = [];
 function addStudentToClass(studentName) {
   // You write code here
   if (!studentName.trim()) return `You didn't provide student name!`;
+  if (class07Students.length >= 6 && studentName !== "Queen")
+    return `Cannot add more students to class 07`;
+  if (studentName === "Queen") class07Students.push(studentName);
   if (class07Students.includes(studentName)) {
     console.log(`Student ${studentName} is already in the class`);
     return;
