@@ -36,7 +36,7 @@ const getEventWeekday = (daysUntilEvent) => {
   ];
 
   const todayIndex = new Date().getDay();
-  const eventDay = week[todayIndex + (daysUntilEvent % 7)];
+  const eventDay = week[(todayIndex + daysUntilEvent) % 7];
   return eventDay;
 };
 
