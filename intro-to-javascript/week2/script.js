@@ -10,11 +10,16 @@ const getFullName = (firstName, surname, useFormalName, isWoman) => {
   const fullName = `${firstName} ${surname}`;
   if (useFormalName && isWoman) return `Lady ${fullName}`;
   if (useFormalName) return `Lord ${fullName}`;
+  if (!firstName.trim() || !surname.trim())
+    return "Provide first name and surname";
   return fullName;
 };
 
 const fullName1 = getFullName("Benjamin", "Hughes", true, true);
-const fullName2 = getFullName("Stanislav", "Savuliak", true);
+const fullName2 = getFullName("Stanislav", "");
+
+console.log(fullName1);
+console.log(fullName2);
 
 /**
  * Another customer has contacted us. They work for a secret company that rhymes with foogle.
@@ -36,7 +41,7 @@ const getEventWeekday = (daysUntilEvent) => {
   ];
 
   const todayIndex = new Date().getDay();
-  const eventDay = week[todayIndex + (daysUntilEvent % 7)];
+  const eventDay = week[(todayIndex + daysUntilEvent) % 7];
   return eventDay;
 };
 
@@ -64,14 +69,15 @@ const clothesToWear = recommendWhatToWear(21);
 const class07Students = [];
 function addStudentToClass(studentName) {
   // You write code here
-  if (!studentName) return;
-  if (class07Students.includes("Queen")) return;
-  if (studentName === "Queen") class07Students.push(studentName);
+  if (!studentName.trim()) return `You didn't provide student name!`;
   if (class07Students.includes(studentName)) {
     console.log(`Student ${studentName} is already in the class`);
     return;
   }
-  if (class07Students.length < 7) class07Students.push(studentName);
+  if (class07Students.length >= 6 && studentName !== "Queen")
+    return `Cannot add more students to class 07`;
+  if (studentName === "Queen") class07Students.push(studentName);
+  if (class07Students.length <= 6) class07Students.push(studentName);
 }
 
 function getNumberOfStudents(studentList) {
