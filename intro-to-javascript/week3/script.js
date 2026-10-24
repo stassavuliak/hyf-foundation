@@ -14,11 +14,12 @@ const names = [
   "Katrine",
   "Tala",
 ];
-const nameToRemove = "Ahmad";
+const nameToRemove = "Bob";
 
 // Write some code here
 const removeArrayElement = (nameToRemove, array) => {
   const indexOfRemovalValue = array.indexOf(nameToRemove);
+  if (indexOfRemovalValue === -1) return "That name doesn't exist";
   array.splice(indexOfRemovalValue, 1);
   return array;
 };
@@ -48,9 +49,9 @@ const getTimeToDestination = (travelInformation) => {
 
   let decimalPart = number - hour;
   const min = 1 / 60;
-  decimalPart = min * Math.round(decimalPart / min);
+  const roundedDecimalPart = min * Math.round(decimalPart / min);
 
-  const minute = Math.floor(decimalPart * 60);
+  const minute = Math.floor(roundedDecimalPart * 60);
 
   const time = `${hour} hours and ${minute} minutes`;
 
@@ -159,20 +160,16 @@ console.log(notes);
   };
  */
 const getNote = (id) => {
+  if (!Number.isInteger(id) || id < 0) return "Error: try another ID";
+
   for (let i = 0; i < notes.length; i++) {
-    if (
-      typeof id !== "number" ||
-      Number.isNaN(id) ||
-      id <= 0 ||
-      id >= notes.length
-    ) {
-      return "Error: try another ID";
-    }
-    return notes[id - 1];
+    if (notes[i].id === id) return notes[i];
   }
+
+  return "Error: try another ID";
 };
 
-// console.log(getNote(3));
+console.log("here", getNote(8));
 
 //Log out notes
 const logOutNotesFormatted = (notes) => {
@@ -244,19 +241,21 @@ const showStatus = (activities, date, limit) => {
     if (activities[i].date === date) {
       totalActivitiesForDay += 1;
       totalDurationForDay += activities[i].duration;
-    } else {
-      return "Please choose another date";
     }
   }
 
-  if (totalDuration > limit) {
+  if (!totalActivitiesForDay) {
+    return "Please choose another date";
+  }
+
+  if (totalDurationForDay > limit) {
     return "You have reached your limit, no more smartphoning for you!";
   }
   // return `You have added ${totalActivities} activities. They amount to ${totalDuration} min. of usage`;
   return `You have added ${totalActivitiesForDay} activities for ${date}. They amount to ${totalDurationForDay} min. of usage`;
 };
 
-console.log(showStatus(activities, "19/10-26", 130));
+console.log(showStatus(activities, "23/10-26", 130));
 
 const getMostActivity = (activities) => {
   const sortedActivities = [];
@@ -270,7 +269,7 @@ const getMostActivity = (activities) => {
       );
       item.duration += activities[i].duration;
     } else {
-      sortedActivities.push(activities[i]);
+      sortedActivities.push({ ...activities[i] });
     }
   }
 
