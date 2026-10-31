@@ -1,75 +1,107 @@
 // Voice assistant
 
-let userName = "";
-const todos = [];
+const user = {
+  name: "",
+  todos: [],
+};
 
 const getReply = (command) => {
+  if (!command.trim()) return "Provide a command please";
+  const loweredCommand = command.toLowerCase();
+
   // Hello my name is Benjamin
-  if (command.includes("Hello my name is")) {
-    if (userName) {
+  if (loweredCommand.includes("my name is")) {
+    if (user.name) {
       return "The name is already saved";
     }
-    userName = command.slice(17).toLowerCase();
-    return `nice to meet you ${userName[0].toUpperCase()}${userName.slice(1)}`;
+    const splitted = loweredCommand.split(" ");
+    user.name = splitted[splitted.length - 1];
+    return `nice to meet you ${user.name[0].toUpperCase()}${user.name.slice(1)}`;
   }
 
-  // if userName doesn't provided
-  if (command.includes("What is my name?") && !userName) {
+  // if user.name doesn't provided
+  if (loweredCommand.includes("what is my name?") && !user.name) {
     return "Please tell your name";
   }
 
   // What is my name
-  if (command.includes("What is my name?")) {
-    return userName;
+  if (loweredCommand.includes("what is my name?")) {
+    return user.name;
   }
 
-  //Add fishing to my todo
-  if (command.includes("Add fishing to my todo")) {
-    todos.push("fishing");
-    return "fishing added to your todo";
+  //Add new todo item
+  if (loweredCommand.includes("add") && loweredCommand.includes("to my todo")) {
+    const todo = loweredCommand
+      .replace("add", "")
+      .replace("to my todo", "")
+      .trim();
+    user.todos.push(todo);
+    return `${todo} added to your todo`;
   }
 
-  // Add singing in the shower to my todo
-  if (command.includes("Add singing in the shower to my todo")) {
-    todos.push("singing in the shower");
-    return "singing added to your todo";
-  }
-
-  // Remove fishing from my todo
-  if (command.includes("Remove fishing from my todo")) {
-    const index = todos.indexOf("fishing");
+  // Remove todo item
+  if (
+    loweredCommand.includes("remove") &&
+    loweredCommand.includes("from my todo")
+  ) {
+    const todo = loweredCommand
+      .replace("remove", "")
+      .replace("from my todo", "")
+      .trim();
+    const index = user.todos.indexOf(todo);
     if (index > -1) {
-      todos.splice(index, 1);
+      user.todos.splice(index, 1);
     }
-    return "Removed fishing from your todo";
+    return `Removed ${todo} from your todo`;
   }
 
   // What is on my todo?
-  if (command.includes("What is on my todo?")) {
-    const listOfTasks = todos.join(" and ");
+  if (loweredCommand.includes("what is on my todo?")) {
+    const listOfTasks = user.todos.join(" and ");
     const result =
-      todos.length === 1
-        ? `You have ${todos.length} todo - ${listOfTasks}`
-        : `You have ${todos.length} todos - ${listOfTasks}`;
+      user.todos.length === 1
+        ? `You have ${user.todos.length} todo - ${listOfTasks}`
+        : `You have ${user.todos.length} user.todos - ${listOfTasks}`;
     return result;
   }
 
   // What day is it today?
-  if (command.includes("What day is it today?")) {
+  if (loweredCommand.includes("what day is it today?")) {
     const today = new Date();
     return `${today.getDate()} of ${today.toLocaleString("default", { month: "long" })} ${today.getFullYear()}`;
   }
 
   // what is (math expression)?
-  if (command.includes("what is")) {
-    const string = command.slice(7);
-    const mathExp = eval(command.slice(7));
-    return `The result of ${string} = ${mathExp}`;
+  if (loweredCommand.includes("what is")) {
+    const expression = loweredCommand
+      .replace("what is", "")
+      .trim()
+      .replaceAll(" ", "");
+
+    const operators = "+-/*%";
+    for (let i = 0; i < expression.length; i++) {
+      if (operators.includes(expression[i])) {
+        const operator = expression[i];
+        const numbers = expression.split(operator);
+
+        return operation(numbers[0], numbers[1], operator);
+      }
+    }
+  }
+
+  function operation(numberOne, numberTwo, operator) {
+    const first = Number(numberOne);
+    const second = Number(numberTwo);
+    if (operator === "+") return first + second;
+    if (operator === "-") return first - second;
+    if (operator === "*") return first * second;
+    if (operator === "/") return first / second;
+    if (operator === "%") return first % second;
   }
 
   // Set a timer for 4 minutes
-  if (command.includes("Set a timer for")) {
-    const arr = command.split(" ");
+  if (loweredCommand.includes("set a timer for")) {
+    const arr = loweredCommand.split(" ");
     const minutes = +arr[4];
     setTimeout(() => {
       console.log("Timer done");
@@ -78,13 +110,13 @@ const getReply = (command) => {
   }
 
   // Flip a coin
-  if (command.includes("Flip a coil")) {
+  if (loweredCommand.includes("flip a coil")) {
     const randomNumber = Math.random();
     return randomNumber <= 0.5 ? "Heads" : "Tails";
   }
 };
 
-console.log(getReply("Hello my name is Benjamin"));
+console.log(getReply("Oh, Hello my name is Benjamin"));
 console.log(getReply("What is my name?"));
 console.log(getReply("Add fishing to my todo"));
 console.log(getReply("Add singing in the shower to my todo"));
@@ -95,3 +127,4 @@ console.log(getReply("what is 3 + 3"));
 console.log(getReply("what is 4 * 12"));
 console.log(getReply("Set a timer for 4 minutes"));
 console.log(getReply("Flip a coil"));
+console.log(getReply(""));
