@@ -5,13 +5,13 @@ SELECT COUNT(*) FROM task;
 SELECT COUNT(*) FROM task WHERE due_date IS NULL;
 
 --3. Find all the tasks that are marked as done.
-SELECT task.title, status.name
+SELECT task.id, task.title, status.name
 FROM task
 JOIN status ON task.status_id = status.id
 WHERE status.name = 'Done';
 
 --4. Find all the tasks that are not marked as done.
-SELECT task.title, status.name
+SELECT task.id, task.title, status.name
 FROM task
 JOIN status ON task.status_id = status.id
 WHERE status.name != 'Done';
@@ -33,18 +33,18 @@ OR description LIKE '%database%';
 --8. Get the title and status (as text) of all tasks.
 SELECT task.title, status.name 
 FROM task 
-JOIN status ON task.status_id = status.id
+JOIN status ON task.status_id = status.id;
 
 --9. Get the name of each status, along with a count of how many tasks have that status.
 SELECT status.name, COUNT(task.id) AS task_count
 FROM status
 LEFT JOIN task ON task.status_id = status.id 
-GROUP BY status.name
+GROUP BY status.id, status.name;
 
 --10. Get the names of all statuses, sorted by the status with most tasks first.
 SELECT status.name, COUNT(task.id) AS task_count
 FROM status
 LEFT JOIN task ON task.status_id = status.id 
-GROUP BY status.name
+GROUP BY status.id, status.name
 ORDER BY task_count DESC;
 
