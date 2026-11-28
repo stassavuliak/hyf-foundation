@@ -2,6 +2,7 @@ const mainTag = document.querySelector("main");
 const ul = document.createElement("ul");
 
 function renderProducts(products) {
+  ul.innerHTML = "";
   for (let i = 0; i < products.length; i++) {
     const li = document.createElement("li");
     ul.append(li);
@@ -23,7 +24,6 @@ function createBtn() {
 
   button.addEventListener("click", () => {
     const products = getAvailableProducts();
-    ul.innerHTML = "";
     renderProducts(products);
   });
 
